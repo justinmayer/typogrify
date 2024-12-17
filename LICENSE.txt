@@ -1,5 +1,5 @@
-Copyright (c) 2007, Christian Metts
-Updates copyright (c) 2014, Justin Mayer
+Copyright (c) 2014–present, Justin Mayer
+Copyright (c) 2007–2013, Christian Metts
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
