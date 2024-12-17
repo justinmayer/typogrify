@@ -1,37 +1,46 @@
-Changelog
+CHANGELOG
 =========
 
 (Unreleased)
 ------------
 
-- drop support for Python < 3.6
-- package via Poetry + pyproject instead of Setuptools
-- improve testing, linting, and CI tooling
+- Drop support for Python < 3.8
+- Package via pyproject instead of Setuptools
+- Improve testing, linting, and CI tooling
 
-2.0.6 | 2.0.7
--------------
-
-- address Python 3 compatibility regression
-
-2.0.5 (2014-09-03)
+2.0.7 - 2014-09-18
 ------------------
 
-- enhance ignore_tags granularity: tags can be filtered on id and class using
-  CSS notation
+Address Python 3 compatibility regression
 
-2.0.4 (2014-02-21)
+2.0.6 - 2014-09-06
 ------------------
 
-- move titlecase into the project
+Bug fix for Python 3
 
-2.0.2 | 2.0.3
--------------
-
-- add support for custom ignore tags.
-
-0.1.0 (2014-01-03)
+2.0.5 - 2014-09-03
 ------------------
 
-- add Python 3 compatibility
-- rectify deprecated function calls
-- packaging improvements, including binary wheels
+Enhance `ignore_tags` granularity: tags can be filtered on `id` and `class` using CSS notation
+
+2.0.4 - 2014-02-21
+------------------
+
+Move `titlecase` into the project
+
+2.0.3 - 2014-02-18
+------------------
+
+Add `titlecase` as a dependency
+
+2.0.2 - 2014-02-07
+------------------
+
+Add support for custom ignore tags
+
+0.1.0 - 2014-01-03
+------------------
+
+- Add Python 3 compatibility
+- Rectify deprecated function calls
+- Packaging improvements, including binary wheels
