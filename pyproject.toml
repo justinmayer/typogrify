@@ -50,6 +50,11 @@ project-name = "Typogrify"
 git-username = "botpub"
 git-email = "52496925+botpub@users.noreply.github.com"
 
+[tool.ruff.lint]
+ignore = [
+  "E731",    # use `def` instead of `lambda` expression
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
