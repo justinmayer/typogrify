@@ -70,7 +70,7 @@ def process_ignores(text, ignore_tags=None):
         ignore_tags = []
 
     # make ignore_tags unique and have 'pre' and 'code' as default
-    ignore_tags = set(map(lambda x: x.strip(), ignore_tags)) | set(["pre", "code"])
+    ignore_tags = set(map(lambda x: x.strip(), ignore_tags)) | {"pre", "code"}
 
     # classify tags
     non_filtered_tags = set(
@@ -227,7 +227,7 @@ def caps(text):
             else:
                 caps = matchobj.group(3)
                 tail = ""
-            return """<span class="caps">%s</span>%s""" % (caps, tail)
+            return """<span class="caps">{}</span>{}""".format(caps, tail)
 
     # Add additional tags whose content should be
     # ignored here. Note - <pre> and <code> tag are
@@ -285,7 +285,7 @@ def initial_quotes(text):
         else:
             classname = "quo"
             quote = matchobj.group(8)
-        return """%s<span class="%s">%s</span>""" % (
+        return """{}<span class="{}">{}</span>""".format(
             matchobj.group(1),
             classname,
             quote,

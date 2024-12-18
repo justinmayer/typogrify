@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """Tests for titlecase"""
 
@@ -161,7 +160,7 @@ def check_input_matches_expected_output(in_, out):
     try:
         assert titlecase(in_) == out
     except AssertionError:
-        print("%s != %s" % (titlecase(in_), out))
+        print("{} != {}".format(titlecase(in_), out))
         raise
 
 
