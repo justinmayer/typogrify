@@ -1,7 +1,8 @@
 # Typogrify
 
-[![GitHub Actions CI: continuous integration status](https://img.shields.io/github/workflow/status/justinmayer/typogrify/build)](https://github.com/justinmayer/typogrify/actions)
-[![PyPI Version](https://img.shields.io/pypi/v/typogrify.svg)](https://pypi.org/project/typogrify/)
+[![GitHub Actions CI: continuous integration status](https://img.shields.io/github/actions/workflow/status/justinmayer/typogrify/main.yml?branch=main)](https://github.com/justinmayer/typogrify/actions)
+[![PyPI Version](https://img.shields.io/pypi/v/typogrify)](https://pypi.org/project/typogrify/)
+[![Downloads](https://img.shields.io/pypi/dm/typogrify)](https://pypi.org/project/typogrify/)
 
 Typogrify provides a set of custom filters that automatically apply various transformations to plain text in order to yield typographically-improved HTML. While often used in conjunction with [Jinja][] and [Django][] template systems, the filters can be used in any environment.
 
@@ -87,21 +88,21 @@ Also accounts for potential closing inline elements: `a`, `em`, `strong`, `span`
 
 ## Development
 
-To set up your development environment, first clone the project. Then
-create and activate a new virtual environment. From within the project,
-run:
+To set up your development environment, first clone the project. Ensure [`uv`][] is installed and then run:
 
-    python -m pip install invoke
-    invoke setup
+    uv sync --all-groups
+    uv run invoke setup
 
 Each time you make changes to Typogrify, there are two things to do
 regarding tests: check that the existing tests pass, and add tests for
 any new features or bug fixes. You can run the tests via:
 
-    invoke tests
+    uv run invoke tests
 
 In addition to running the test suite, it is important to also ensure
 that any lines you changed conform to code style guidelines. You can
 check that via:
 
-    invoke lint
+    uv run invoke lint
+
+[`uv`]: https://docs.astral.sh/uv/
