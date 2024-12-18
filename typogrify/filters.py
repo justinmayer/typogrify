@@ -56,9 +56,7 @@ def process_ignores(text, ignore_tags=None):
                  (?= [^>]*?
                  {attribute} \s*=\s*
                  (['"]) {attribute_value} \{0}
-                 ))""".format(
-            _filter_tag.group, **locals()
-        )
+                 ))""".format(_filter_tag.group, **locals())
 
         return result
 

@@ -71,7 +71,9 @@ def titlecase(text):
             match = MAC_MC.match(word)
             if match:
                 tc_line.append(
-                    "{}{}".format(match.group(1).capitalize(), match.group(2).capitalize())
+                    "{}{}".format(
+                        match.group(1).capitalize(), match.group(2).capitalize()
+                    )
                 )
                 continue
 
