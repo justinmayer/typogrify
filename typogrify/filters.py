@@ -366,38 +366,82 @@ def widont(text):
     return output
 
 
-def applyfilters(text):
-    """Applies the following filters: smartypants, caps, amp, initial_quotes
+def applyfilters(text, **kwargs):
+    """Applies one or more of the following filters: amp, smartypants, caps,
+    initial_quotes.
 
-    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>')
-    '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
+    All filters are applied by default, but any filter may be disabled by
+    setting its corresponding keyword argument to False.
     """
-    text = amp(text)
-    text = smartypants(text)
-    text = caps(text)
-    text = initial_quotes(text)
-
+    if kwargs.pop("amp", True):
+        text = amp(text)
+    if kwargs.pop("smartypants", True):
+        text = smartypants(text)
+    if kwargs.pop("caps", True):
+        text = caps(text)
+    if kwargs.pop("initial_quotes", True):
+        text = initial_quotes(text)
+    if kwargs:
+        raise TypeError("Unexpected keyword argument(s): %s" % list(kwargs.keys()))
     return text
 
 
-def typogrify(text, ignore_tags=None):
-    """The super typography filter
+def typogrify(text, ignore_tags=None, **kwargs):
+    """The super typography filter.
 
-    Applies filters to text that are not in tags contained in the
-    ignore_tags list.
+    Applies filters to text that are not in tags contained in the ignore_tags
+    list.
+
+    The following filters are applied by default: amp, smartypants, caps,
+    initial_quotes, widont.
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>')
+    '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
+
+    >>> typogrify('<div>"Jayhawks" & KU fans act extremely obnoxiously</div>', ignore_tags=["div"])
+    '<div>"Jayhawks" & KU fans act extremely obnoxiously</div>'
+
+    The widont filter ignores the ignore_tags list, because it applies to
+    predetermined set of tags.
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', ignore_tags=["h2"])
+    '<h2>"Jayhawks" & KU fans act extremely&nbsp;obnoxiously</h2>'
+
+    Any filter may be disabled by setting its corresponding keyword argument to
+    False.
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', amp=False)
+    '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; & <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', smartypants=False)
+    '<h2><span class="dquo">"</span>Jayhawks" <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', caps=False)
+    '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; <span class="amp">&amp;</span> KU fans act extremely&nbsp;obnoxiously</h2>'
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', initial_quotes=False)
+    '<h2>&#8220;Jayhawks&#8221; <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', widont=False)
+    '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely obnoxiously</h2>'
+
+    >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', amp=False, smartypants=False, caps=False, initial_quotes=False, widont=False)
+    '<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>'
     """
-
+    apply_widont = kwargs.pop("widont", True)
     section_list = process_ignores(text, ignore_tags)
 
     rendered_text = ""
     for text_item, should_process in section_list:
         if should_process:
-            rendered_text += applyfilters(text_item)
+            rendered_text += applyfilters(text_item, **kwargs)
         else:
             rendered_text += text_item
 
-    # apply widont at the end, as its already smart about tags. Hopefully.
-    return widont(rendered_text)
+    # Apply widont at the end, as its already smart about tags. Hopefully.
+    if apply_widont:
+        rendered_text = widont(rendered_text)
+    return rendered_text
 
 
 def _test():
