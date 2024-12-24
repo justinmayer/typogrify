@@ -381,6 +381,8 @@ def applyfilters(text, **kwargs):
         text = caps(text)
     if kwargs.pop("initial_quotes", True):
         text = initial_quotes(text)
+    if kwargs.pop("widont", True):
+        text = widont(text)
     if kwargs:
         raise TypeError("Unexpected keyword argument(s): %s" % list(kwargs.keys()))
     return text
@@ -398,14 +400,8 @@ def typogrify(text, ignore_tags=None, **kwargs):
     >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>')
     '<h2><span class="dquo">&#8220;</span>Jayhawks&#8221; <span class="amp">&amp;</span> <span class="caps">KU</span> fans act extremely&nbsp;obnoxiously</h2>'
 
-    >>> typogrify('<div>"Jayhawks" & KU fans act extremely obnoxiously</div>', ignore_tags=["div"])
-    '<div>"Jayhawks" & KU fans act extremely obnoxiously</div>'
-
-    The widont filter ignores the ignore_tags list, because it applies to
-    predetermined set of tags.
-
     >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', ignore_tags=["h2"])
-    '<h2>"Jayhawks" & KU fans act extremely&nbsp;obnoxiously</h2>'
+    '<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>'
 
     Any filter may be disabled by setting its corresponding keyword argument to
     False.
@@ -428,7 +424,6 @@ def typogrify(text, ignore_tags=None, **kwargs):
     >>> typogrify('<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>', amp=False, smartypants=False, caps=False, initial_quotes=False, widont=False)
     '<h2>"Jayhawks" & KU fans act extremely obnoxiously</h2>'
     """
-    apply_widont = kwargs.pop("widont", True)
     section_list = process_ignores(text, ignore_tags)
 
     rendered_text = ""
@@ -438,9 +433,6 @@ def typogrify(text, ignore_tags=None, **kwargs):
         else:
             rendered_text += text_item
 
-    # Apply widont at the end, as its already smart about tags. Hopefully.
-    if apply_widont:
-        rendered_text = widont(rendered_text)
     return rendered_text
 
 
