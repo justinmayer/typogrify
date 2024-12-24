@@ -50,6 +50,7 @@ test = [
 project-name = "Typogrify"
 git-username = "botpub"
 git-email = "52496925+botpub@users.noreply.github.com"
+version-strings = ["typogrify/__init__.py"]
 
 [tool.ruff.lint]
 ignore = [
