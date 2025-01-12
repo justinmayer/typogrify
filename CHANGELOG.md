@@ -1,13 +1,6 @@
 CHANGELOG
 =========
 
-(Unreleased)
-------------
-
-- Drop support for Python < 3.8
-- Package via pyproject instead of Setuptools
-- Improve testing, linting, and CI tooling
-
 2.0.7 - 2014-09-18
 ------------------
 
