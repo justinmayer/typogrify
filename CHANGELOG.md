@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+2.1.0 - 2025-01-12
+------------------
+
+- Add ability to select which filters are applied
+- Package via pyproject instead of Setuptools
+- Improve testing, linting, and CI tooling
+- Drop support for Python < 3.9
+
 2.0.7 - 2014-09-18
 ------------------
 
